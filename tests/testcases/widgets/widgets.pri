@@ -2,7 +2,7 @@ INCLUDEPATH += $$PWD/../../../src/
 INCLUDEPATH += $$PWD/../../../src/widgets/
 INCLUDEPATH += $$OUT_PWD/../src/
 
-  SOURCES += \
+SOURCES += \
     $$PWD/ut_daboutdialog.cpp \
     $$PWD/ut_dabstractdialog.cpp \
     $$PWD/ut_dalertcontrol.cpp \
@@ -68,7 +68,7 @@ INCLUDEPATH += $$OUT_PWD/../src/
     $$PWD/ut_dspinner.cpp \
     $$PWD/ut_dshaowline.cpp \
     $$PWD/ut_dstackwidget.cpp \
-#    $$PWD/ut_dstyle.cpp \
+    $$PWD/ut_dstyle.cpp \
     $$PWD/ut_dstyleditemdelegate.cpp \
     $$PWD/ut_dstyleoption.cpp \
     $$PWD/ut_dsuggestbutton.cpp \

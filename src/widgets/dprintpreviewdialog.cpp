@@ -121,6 +121,7 @@ void DPrintPreviewDialogPrivate::initui()
 
     DTitlebar *titlebar = q->findChild<DTitlebar *>();
     Q_ASSERT(titlebar);
+    titlebar->setObjectName("titlewidget");
     titlebar->setAutoFillBackground(true);
 
     DPalette pa = DPaletteHelper::instance()->palette(titlebar);

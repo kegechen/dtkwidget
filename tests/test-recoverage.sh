@@ -21,7 +21,21 @@ make check -j$(nproc)
 
 lcov -d ./ -c -o coverage_all.info
 lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
-lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" --output-file coverage.info
+filter_files=(
+"*/src/widgets/dimagebutton*"
+"*/src/widgets/dbaseexpand*"
+"*/src/widgets/dexpandgroup*"
+"*/src/widgets/dsegmentedcontrol*"
+"*/src/widgets/dshortcutedit*"
+"*/src/widgets/dtoast*"
+"*/src/widgets/dsimplelistitem*"
+"*/src/widgets/dswitchlineexpand*"
+"*/src/widgets/dapplicationhelper*"
+"*/src/util/dregionmonitor*"
+"*/src/util/dtrashmanager*"
+"*/src/util/dthumbnailprovider*"
+)
+lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" ${filter_files[*]} --output-file coverage.info
 genhtml -o ../../tests/$REPORT_DIR coverage.info
 
 cd ..
