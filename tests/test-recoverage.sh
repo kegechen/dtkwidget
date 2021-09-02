@@ -22,6 +22,7 @@ make check -j$(nproc)
 lcov -d ./ -c -o coverage_all.info
 lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
 filter_files=(
+# deprecated
 "*/src/widgets/dimagebutton*"
 "*/src/widgets/dbaseexpand*"
 "*/src/widgets/dexpandgroup*"
@@ -34,6 +35,14 @@ filter_files=(
 "*/src/util/dregionmonitor*"
 "*/src/util/dtrashmanager*"
 "*/src/util/dthumbnailprovider*"
+# depends xcb, etc...
+"*/dthememanager*"
+"*/dsimplelistview*"
+"*/dmainwindow*"
+"*/dapplication*"
+"*/xutil*"
+"*/private/startupnotifications*"
+"*/private/keyboardmonitor*"
 )
 lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" ${filter_files[*]} --output-file coverage.info
 genhtml -o ../../tests/$REPORT_DIR coverage.info
