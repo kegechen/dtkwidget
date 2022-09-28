@@ -376,6 +376,47 @@ void DListView::setModel(QAbstractItemModel *model)
     if (model) {
         connect(model, &QAbstractItemModel::rowsInserted, this, &DListView::rowCountChanged);
         connect(model, &QAbstractItemModel::rowsRemoved, this, &DListView::rowCountChanged);
+
+        QObject::connect(model, &QStandardItemModel::rowsAboutToBeRemoved, this,
+                         [model](const QModelIndex &, int first, int last) {
+            qInfo() << "model:" << model;
+            QStandardItemModel *m = dynamic_cast<QStandardItemModel *>(model);
+            qInfo() << "---removed---" << first << last << m;
+            if (!m)
+                return;
+
+            auto itemWidgets = [](DStandardItem *item, Qt::Edge edge)->QWidgetList {
+                QWidgetList list;
+                for (auto action : item->actionList(edge)) {
+                    if (action->widget())
+                        list += action->widget();
+                }
+                return list;
+            };
+
+            for (int i = first; i < last + 1; ++i) {
+                qInfo() << "item" << i << m->item(i);
+                auto item = static_cast<DStandardItem *>(m->item(i));
+                QWidgetList list;
+                if (item) {
+                    qInfo() << m->item(i)->text() << "rowsRemoved";
+                    list += itemWidgets(item, Qt::Edge::TopEdge);
+                    list += itemWidgets(item, Qt::Edge::RightEdge);
+                    list += itemWidgets(item, Qt::Edge::BottomEdge);
+                    list += itemWidgets(item, Qt::Edge::LeftEdge);
+                }
+
+                qInfo() << "list.size:" << list.size();
+                for (QWidget *w : list) {
+                    qInfo() << "w:" << w;
+                    w->setVisible(false);
+                }
+
+//                qInfo() << "visualRect:" << visualRect(m->indexFromItem(item));
+            }
+
+        });
+
     }
 }
 
